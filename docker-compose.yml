@@ -1,0 +1,6 @@
+services:
+  imageresizer:
+    image: ${DOCKER_REGISTRY-}imageresizer
+    build:
+      context: .
+      dockerfile: ImageResizer/Dockerfile
