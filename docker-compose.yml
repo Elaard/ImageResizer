@@ -4,3 +4,31 @@ services:
     build:
       context: .
       dockerfile: ImageResizer/Dockerfile
+  dynamo:
+    image: amazon/dynamodb-local
+    container_name: dynamodb_todo
+    ports:
+      - "8000:8000"
+    volumes:
+      - dynamo-data:/home/dynamo/db
+    environment:
+      - DB_PATH=/home/dynamo/db
+    restart: always
+
+  dynamodb-ui:
+    image: "aaronshaf/dynamodb-admin"
+    container_name: dynamodb-admin
+    depends_on:
+      - dynamo
+    ports:
+      - "8001:8001"
+    environment:
+      - DYNAMO_ENDPOINT=http://dynamodb_todo:8000
+      - AWS_REGION=ap-southeast-1
+    restart: always
+
+volumes:
+  dynamo-data:
+    driver: local
+  
+    
