@@ -1,9 +1,11 @@
 services:
-  imageresizer:
+  api:
     image: ${DOCKER_REGISTRY-}imageresizer
     build:
       context: .
       dockerfile: ImageResizer/Dockerfile
+    ports:
+        - "8080:8080"
   dynamo:
     image: amazon/dynamodb-local
     container_name: dynamodb_todo
